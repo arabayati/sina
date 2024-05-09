@@ -82,7 +82,8 @@ def NSE(targets,predictions):
 model = keras.Sequential()
 model.add(keras.layers.LSTM(units=256, return_sequences=False, input_shape=(TIME_STEP, len(f_columns) + len(staticColumns))))
 model.add(keras.layers.Dropout(rate=0.4))
-model.add(keras.layers.Dense(units=1))
+model.add(keras.layers.Dense(units=1, activation='relu))
+
 callbacks = [keras.callbacks.EarlyStopping(patience=Patience, restore_best_weights=True)]
 model.compile(loss='mean_squared_error', optimizer=optimizers.Adam(learning_rate=LearningRate))     # compile a model based on MSE
 
@@ -137,8 +138,8 @@ num_val_months = int(num_train_months / 2)
 # Change based on the number of useful months needed for training
 iterations = int(187 / num_train_months)
 
-samples_df = pd.read_csv('80_Samples.csv', header=None, dtype=str)
-samples_list = samples_df[0].tolist()
+#samples_df = pd.read_csv('80_Samples.csv', header=None, dtype=str)
+#samples_list = samples_df[0].tolist()
 
 # Training loop
 while (iteration <= iterations):
